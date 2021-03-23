@@ -1,3 +1,5 @@
+{{-- A more complicated application or implementation would break
+ out the functionality of this page in to multiple components --}}
 <!doctype html>
 <html lang="en">
     <head>
@@ -16,7 +18,7 @@
             <div class="alert alert-danger" role="alert" style="display:none;" id="errorDiv">
                 <strong>Error:</strong> There was an error fetching your weather data.
             </div>
-            <form id="weatherForm" name="weatherForm" action="./weatherLookup">
+            <form id="weatherForm" name="weatherForm">
                 <input type="text" name="ip_address" id="ip_address"  value="{{ request()->get('ip_address', request()->ip()) }}" placeholder="IP ADDRESS">
                 <input type="button" id="submitButton" value="Submit">
             </form>
@@ -34,9 +36,12 @@
         <script>
             var displayDiv = $('#weather_display');
             var locationDisplay = $('#location_display');
-            $('#submitButton').on('click', getWeather);
+            var submitButton = $('#submitButton');
+            submitButton.on('click', getWeather);
 
             function getWeather() {
+                submitButton.prop('disabled', true);
+                submitButton.val('Please Wait...');
                 displayDiv.empty();
                 locationDisplay.empty();
                 var response = $.ajax({
@@ -62,6 +67,10 @@
                     },
                     error: function(e){
                         $('#errorDiv').show();
+                    },
+                    complete: function(e){
+                        submitButton.prop('disabled', false);
+                        submitButton.val('Submit');
                     }
                 });
             }

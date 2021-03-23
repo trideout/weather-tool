@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/**
+ * The base route for returning the only blade template in this project
+ */
 Route::get('/', function () {
     return view('home');
 });

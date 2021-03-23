@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class WeatherService {
     /**
-     * Fetch weather fom a location in the format [lat,long]
+     * Fetch weather fom a location in the format [lat,long]. Converting results into a standard format allows for compatibility across classes
      * @param array $location
      * @return array
      */
@@ -29,11 +29,11 @@ class WeatherService {
     }
 
     /**
-     * Proxy for response from metaweather to be passed to the decorator
+     * Proxy for response from metaweather to be passed to the decorator. Method is private as it is never needed outside the context of this class.
      * @param array $data
      * @return array
      */
-    public function formatDay(array $data): array{
+    private function formatDay(array $data): array{
         $day = [
             'date' => Carbon::parse($data['applicable_date'])->format('D M j'),
             'image' => 'https://www.metaweather.com/static/img/weather/png/64/' . $data['weather_state_abbr'] . '.png',

@@ -29,7 +29,8 @@ class Controller extends BaseController
     }
 
     /**
-     * Validation and data fetching for weather lookup requests. Only handles one request type. If handling multiple request types I would use a custom factory instead.
+     * Validation and data fetching for weather lookup requests.
+     * Only handles one request type. If handling multiple request types I would use a custom factory instead.
      *
      * @return JsonResponse
      * @throws \Illuminate\Validation\ValidationException
@@ -43,7 +44,7 @@ class Controller extends BaseController
         ]);
         /**
          * location lookup and weather lookup are broken into separate services to provide abstraction.
-         * a first class project would treat these as interfaces.
+         * a first class project would treat these as interfaces to allow for easy replacement of any given service.
          */
         $ip = request()->get('ip_address');
         $location = $this->locationService->getLocation($ip);
